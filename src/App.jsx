@@ -18,13 +18,13 @@ function App() {
         <div className="min-h-screen bg-gray-50">
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<HomePage />} />
+            <Route path="/er" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
             {/* Protected routes */}
             <Route
-              path="/dashboard"
+              path="/"
               element={
                 <ProtectedRoute>
                   <DashboardPage />
