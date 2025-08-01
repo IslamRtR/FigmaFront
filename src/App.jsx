@@ -2,9 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { AuthProvider } from "./context/AuthContext"
 
 // Pages
-import HomePage from "./pages/HomePage"
-import LoginPage from "./pages/LoginPage"
-import RegisterPage from "./pages/RegisterPage"
 import DashboardPage from "./pages/DashboardPage"
 import ScanPage from "./pages/ScanPage"
 import HistoryPage from "./pages/HistoryPage"
@@ -18,8 +15,7 @@ function App() {
           <Routes>
             {/* Public routes */}
             <Route path="/dashboard" element={<DashboardPage/>} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+
 
             {/* Теперь все защищённые страницы доступны без входа */}
             <Route path="/scan" element={<ScanPage />} />
