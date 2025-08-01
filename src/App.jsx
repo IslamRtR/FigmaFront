@@ -17,12 +17,11 @@ function App() {
         <div className="min-h-screen bg-gray-50">
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<DashboardPage/>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 
             {/* Теперь все защищённые страницы доступны без входа */}
-            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/scan" element={<ScanPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/profile" element={<ProfilePage />} />
