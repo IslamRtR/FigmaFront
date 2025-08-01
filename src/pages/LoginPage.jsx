@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
 import { Leaf, Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react"
 
 const LoginPage = () => {
@@ -11,35 +10,31 @@ const LoginPage = () => {
     password: "",
   })
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const { login } = useAuth()
   const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    if (error) setError("")
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
-    setError("")
 
     try {
-      const result = await login(formData.email, formData.password)
-      if (result.success) {
-        navigate("/dashboard")
-      } else {
-        setError(result.error)
-      }
+      // Просто переход на dashboard без проверки
+      navigate("/dashboard")
     } catch (error) {
-      setError("Кіру кезінде қате орын алды")
+      console.error("Кіру қатесі:", error)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleGuestLogin = () => {
+    navigate("/dashboard")
   }
 
   return (
@@ -56,23 +51,12 @@ const LoginPage = () => {
             <span className="text-2xl font-bold text-gray-800">PlantID</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-800">Кіру</h1>
-          <p className="text-gray-600 mt-2">Аккаунтыңызға кіріңіз</p>
+          <p className="text-gray-600 mt-2">Аккаунтыңызға кіріңіз немесе қонақ ретінде кіріңіз</p>
         </div>
 
         <div className="card shadow-xl border-0">
           <div className="p-6">
-            <div className="space-y-1 mb-6">
-              <h2 className="text-2xl font-semibold text-center">Қош келдіңіз!</h2>
-              <p className="text-center text-gray-600">Өз аккаунтыңызға кіріңіз</p>
-            </div>
-
             <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                  <p className="text-red-600 text-sm">{error}</p>
-                </div>
-              )}
-
               <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email
@@ -83,7 +67,6 @@ const LoginPage = () => {
                     id="email"
                     name="email"
                     type="email"
-                    required
                     placeholder="example@email.com"
                     value={formData.email}
                     onChange={handleChange}
@@ -102,7 +85,6 @@ const LoginPage = () => {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    required
                     placeholder="Құпия сөзіңіз"
                     value={formData.password}
                     onChange={handleChange}
@@ -120,6 +102,14 @@ const LoginPage = () => {
 
               <button type="submit" disabled={isLoading} className="btn btn-primary w-full">
                 {isLoading ? "Кіруде..." : "Кіру"}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleGuestLogin}
+                className="btn btn-secondary w-full"
+              >
+                Гость ретінде кіру
               </button>
             </form>
 
